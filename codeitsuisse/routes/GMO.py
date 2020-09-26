@@ -38,7 +38,6 @@ def evaluateGMO():
             if k != "A":
                 for i in range(v):
                     sorted_seq.append(k)
-        print(sorted_seq)
         for count in range(cc_count):
             if charCount["A"] > 1:
                 sorted_seq.insert(count*2, "AA")
@@ -46,12 +45,10 @@ def evaluateGMO():
             elif charCount["A"] == 1:
                 sorted_seq.insert(count*2, "AA")
                 charCount["A"] -= 1
-        print(sorted_seq)
         for count in range(acgt_count):
             if charCount["A"] > 0:
                 sorted_seq.insert(cc_count*2 + count*2, "A")
                 charCount["A"] -= 1
-        print(sorted_seq)
         count = 0
         while charCount["A"] > 0:
             if charCount["A"] == 1:
@@ -64,8 +61,9 @@ def evaluateGMO():
 
         ans.append({"id":el["id"], "geneSequence":"".join(sorted_seq)})    
 
-    logging.info("My result :{}".format(ans))
-    return json.dumps(ans)
+    result = {"runId":runId, "list":ans}
+    logging.info("My result :{}".format(result))
+    return json.dumps(result)
 
 
 
