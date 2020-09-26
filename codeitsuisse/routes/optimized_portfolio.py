@@ -44,7 +44,7 @@ def best_future(portfolio):
             "HedgePositionName": name,
             "OptimalHedgeRatio": opt_hr,
             "NumFuturesContract": nfc,
-            "f_std": f_std
+            # "f_std": f_std
         }
         if opt_hr in min_ohr:
             min_ohr[opt_hr] += [name]
