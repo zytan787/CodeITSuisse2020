@@ -20,7 +20,7 @@ def clean(arr):
             current_position -= 1
             arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
         else:
-            if arr[i-1] > arr[i+1]:
+            if arr[current_position-1] > arr[current_position+1]:
                 current_position -= 1
                 arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
             else:
