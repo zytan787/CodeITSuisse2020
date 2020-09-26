@@ -23,7 +23,7 @@ def round_up(num, decimals=0):
 
 
 def optimal_hedge_ratio(cc, std_spot, std_future):
-    return round_up(cc * std_spot / std_future, 3)
+    return round_acc(cc * std_spot / std_future, 3)
 
 
 def num_future_contract(ohr, pf_value, future_price, notional):
@@ -51,6 +51,7 @@ def best_future(portfolio):
             "NumFuturesContract": nfc,
             # "f_std": f_std
         }
+        # print(best[name])
         if opt_hr in min_ohr:
             min_ohr[opt_hr] += [name]
         else:
