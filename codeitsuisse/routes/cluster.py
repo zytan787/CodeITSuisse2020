@@ -27,23 +27,21 @@ def cluster():
                         stack.append([x1, y1])
                         a.remove([x1, y1])
             ct += 1
-        return (ct)
-
+        return ct
 
     q = []
     uninfected = 0
     new_infected = []
-    c = 0  # number of cluster
     direction = [(0, 1), (1, 0), (-1, 0), (0, -1), (1, 1), (-1, -1), (1, -1), (-1, 1)]
     for i, x in enumerate(grid):
         for j, y in enumerate(x):
             if y == '1':
                 q.append([i, j])
-                c += 1
+
             elif y == '0':
                 uninfected += 1
     if not uninfected:
-        return 0
+        ans["answer"] = 0
 
     while q:
         ptr = q.pop(0)

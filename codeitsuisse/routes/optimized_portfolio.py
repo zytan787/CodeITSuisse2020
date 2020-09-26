@@ -34,8 +34,7 @@ def best_future(portfolio):
         best[name] = {
             "HedgePositionName": name,
             "OptimalHedgeRatio": opt_hr,
-            "NumFuturesContract": nfc,
-            "f_std": f_std
+            "NumFuturesContract": nfc
         }
         if min_ohr is None or opt_hr < min_ohr[0]:
             min_ohr = (opt_hr, name)
@@ -45,11 +44,10 @@ def best_future(portfolio):
             min_nfc = (nfc, name)
 
     if min_ohr[1] == min_f_std[1]:
-        best[min_ohr[1]].pop('f_std', None)
-        return best[min_ohr[1]]
+        key = min_ohr[1]
     else:
-        best[min_nfc[1]].pop('f_std', None)
-        return best[min_nfc[1]]
+        key = min_nfc[1]
+    return best[key]
 
 
 @app.route('/optimizedportfolio', methods=['POST'])
@@ -57,7 +55,8 @@ def optimizedPortfolio():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     inputs = data.get("inputs")
-    outputs = {'outputs': [best_future(pf) for pf in inputs]}
+    L = [best_future(pf) for pf in inputs]
+    outputs = {'outputs': list({(v['NumFuturesContract'], v['OptimalHedgeRatio']): v for v in L}.values())}
     logging.info("My result :{}".format(outputs))
     return json.dumps(outputs)
 
