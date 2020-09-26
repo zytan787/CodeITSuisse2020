@@ -45,7 +45,7 @@ def best_future(portfolio):
     return best
 
 
-@app.route('/optimizeportfolio', methods=['POST'])
+@app.route('/optimizedportfolio', methods=['POST'])
 def optimizedPortfolio():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
