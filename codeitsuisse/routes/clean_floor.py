@@ -68,7 +68,10 @@ def clean(arr):
                 right = True
         if arr[i] == 0:
             arr[i] = 1
-            i += 1
+            if right:
+                i += 1
+            else:
+                i -= 1
         else:
             arr[i] -= 1
             if arr[i] == 0:
@@ -78,6 +81,11 @@ def clean(arr):
                 else:
                     i += 1
                     right = True
+            else:
+                if right:
+                    i += 1
+                else:
+                    i -= 1
         ans += 1
 
     return ans
