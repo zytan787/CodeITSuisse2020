@@ -55,8 +55,7 @@ def optimizedPortfolio():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     inputs = data.get("inputs")
-    L = [best_future(pf) for pf in inputs]
-    outputs = {'outputs': list({(v['NumFuturesContract'], v['OptimalHedgeRatio']): v for v in L}.values())}
+    outputs = {'outputs': [best_future(pf) for pf in inputs]}
     logging.info("My result :{}".format(outputs))
     return json.dumps(outputs)
 
