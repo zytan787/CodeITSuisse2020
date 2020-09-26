@@ -68,7 +68,7 @@ def cleanFloor():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     inputValue = data.get("tests")
-    result = {'answer': dict()}
+    result = {'answers': dict()}
     for k, v in inputValue.items():
         clean(v['floor'])
         result['answer'][k] = move
