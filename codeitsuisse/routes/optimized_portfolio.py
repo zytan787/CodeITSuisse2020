@@ -17,8 +17,13 @@ def round_acc(num, decimals=0):
         return math.floor(num * multiplier + 0.5) / multiplier
 
 
+def round_up(num, decimals=0):
+    multiplier = 10 ** decimals
+    return math.ceil(num * multiplier) / multiplier
+
+
 def optimal_hedge_ratio(cc, std_spot, std_future):
-    return round_acc(cc * std_spot / std_future, 3)
+    return round_up(cc * std_spot / std_future, 3)
 
 
 def num_future_contract(ohr, pf_value, future_price, notional):
