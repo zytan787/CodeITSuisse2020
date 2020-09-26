@@ -51,7 +51,13 @@ def evaluateBabylon():
     second_lst = []
     for i in range(len(lst)-1):
         second_lst.append(lst[i:i+1] + lst[i+2:] + lst[:i] + [lst[i+1]])
-    big_lst = [first_lst, second_lst]
+    third_lst = []
+    for i in range(len(lst)-2):
+        third_lst.append(lst[i:i+2] + lst[i+3:] + lst[:i] + [lst[i+2]])
+    forth_lst = []
+    for i in range(len(lst)-3):
+        forth_lst.append(lst[i:i+3] + lst[i+4:] + lst[:i] + [lst[i+3]])
+    big_lst = [first_lst, second_lst, third_lst, forth_lst]
 
     for small_lst in big_lst:
         for seq in small_lst:
