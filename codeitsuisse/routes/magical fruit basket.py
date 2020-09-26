@@ -15,7 +15,7 @@ def evaluateFruitBasket():
     data = json.loads(data)
     for key in data:
         count += data[key]
-    result = count * 100
+    result = count * 20
     logging.info("My result :{}".format(result))
     return jsonify(result)
 
