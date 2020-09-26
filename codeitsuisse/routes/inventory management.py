@@ -68,9 +68,13 @@ def evaluateInventoryManagement():
 
     searchResult = []
     dct = {k:v for k,v in sorted(dct.items())}
-    searchResult = list(dct.values())[:10]
+    searchResult = []
+    for value in dct.values():
+        if len(searchResult) == 10:
+            break
+        searchResult.extend(value)
     
-    result = {"searchItemName":name, "searchResult":searchResult}
+    result = [{"searchItemName":name, "searchResult":searchResult}]
     logging.info("My result :{}".format(result))
     return json.dumps(result)
 
