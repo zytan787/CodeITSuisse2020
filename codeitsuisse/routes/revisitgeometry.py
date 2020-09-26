@@ -2,7 +2,7 @@ import logging
 import json
 
 from flask import request, jsonify
-
+import math
 from codeitsuisse import app
 from itertools import combinations as C
 
@@ -47,7 +47,8 @@ def revisitGeo():
 
         return {'x':round(x_cood, 2), 'y':round(y_cood, 2)}
 
-    for c in [(x,x+1)for x in range(len(d_shape)-1)]+[(0, len(d_shape)-1)]:
+    arr = [(x,x+1)for x in range(len(d_shape)-1)]+[(0, len(d_shape)-1)] if len(d_shape)!=2 else [(x,x+1)for x in range(len(d_shape)-1)]
+    for c in arr:
         a = (find_intercept(c))
         if a:
             print(c)
