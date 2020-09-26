@@ -15,7 +15,7 @@ def slsm(boardSize, player, jumps):
     for jump in jumps:
         temp = jump.split(":")
         if int(temp[0]) == 0:
-            board[int(temp[1])] = min(int(temp[1]) + 6, boardSize)
+            board[int(temp[1])] = min(int(temp[1]) + 6, boardSize-1)
         elif int(temp[1]) == 0:
             board[int(temp[0])] = max(int(temp[0]) - 6, 0)
         elif int(temp[0]) > int(temp[1]):
