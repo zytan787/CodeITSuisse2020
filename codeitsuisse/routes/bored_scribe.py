@@ -4,7 +4,7 @@ import json
 # d = enchant.Dict("en_US")
 # import nltk
 # nltk.data.path.append('D:\CodeIT Suisse 2020\CodeITSuisse2020\nltk_data')
-# from nltk.corpus import brown
+from nltk.corpus import wordnet
 
 from flask import request, jsonify;
 
@@ -58,7 +58,7 @@ def decrypt(s):
         real_ans = ""
         word = False
         for j in range(2, len(ans)):
-            if d.check(ans[:j]):
+            if ans[:j] in wordnet.words():
                 word = True
                 break
 
