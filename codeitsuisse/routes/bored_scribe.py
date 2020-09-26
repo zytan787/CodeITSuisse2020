@@ -2,7 +2,7 @@ import logging
 import json
 # import enchant
 # d = enchant.Dict("en_US")
-import nltk
+from nltk.corpus import words
 
 from flask import request, jsonify;
 
@@ -56,7 +56,7 @@ def decrypt(s):
         real_ans = ""
         word = False
         for j in range(2, len(ans)):
-            if ans[:j] in nltk.corpus.words.words():
+            if ans[:j] in words.words():
                 word = True
                 break
 
