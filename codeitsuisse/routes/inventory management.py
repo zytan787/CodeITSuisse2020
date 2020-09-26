@@ -70,11 +70,12 @@ def evaluateInventoryManagement():
 
         searchResult = []
         dct = {k:v for k,v in sorted(dct.items())}
-        searchResult = []
         for value in dct.values():
-            if len(searchResult) == 10:
+            if len(searchResult) >= 10:
                 break
             searchResult.extend(value)
+        
+        searchResult = searchResult[:10]
 
         result.append({"searchItemName":name, "searchResult":searchResult})
 
