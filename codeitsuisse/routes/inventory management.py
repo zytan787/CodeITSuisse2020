@@ -80,7 +80,7 @@ def evaluateInventoryManagement():
         result.append({"searchItemName":name, "searchResult":searchResult})
 
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return jsonify(result)
 
 
 
