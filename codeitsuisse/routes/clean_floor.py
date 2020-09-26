@@ -9,46 +9,24 @@ logger = logging.getLogger(__name__)
 
 def clean(arr):
     ans = 0
-    for i in range(len(arr)-2):
-        _sum = arr[i] + arr[i+1]
-        _diff = arr[i] - arr[i+1]
-        arr[i] = 0
-        if _diff == 0:
-            if _sum % 2 == 0:
-                steps = _sum + 1
-            else:
-                steps = _sum
-        elif _diff > 0:
-            if _diff % 2 != 0:
-                steps = _sum + _diff + 1
-            else:
-                steps = _sum + _diff
-        elif _diff < 0:
-            if abs(_diff) % 2 != 0:
-                steps = _sum + abs(_diff) - 1
-            else:
-                steps = _sum + abs(_diff)
+    current_position = 0
+    n = len(arr)
 
-        ans += steps
-        arr[i+1] = steps % 2 == 0
-
-    _sum = arr[-2] + arr[-1]
-    _diff = arr[-2] - arr[-1]
-
-    if _diff == 0:
-        steps = _sum
-    elif _diff > 0:
-        if _diff % 2 != 0:
-            steps = _sum + _diff + 1
+    while not all(v == 0 for v in arr):
+        if current_position == 0:
+            current_position += 1
+            arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
+        elif current_position == n - 1:
+            current_position -= 1
+            arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
         else:
-            steps = _sum + _diff
-    elif _diff < 0:
-        if abs(_diff) % 2 != 0:
-            steps = _sum + abs(_diff) - 1
-        else:
-            steps = _sum + abs(_diff)
-
-    ans += steps
+            if arr[current_position-1] > arr[current_position+1]:
+                current_position -= 1
+                arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
+            else:
+                current_position += 1
+                arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
+        ans += 1
 
     return ans
             
