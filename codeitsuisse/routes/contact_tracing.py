@@ -28,20 +28,6 @@ def contactTracing():
     origin = data.get("origin")
     cluster = data.get("cluster")
 
-    pp = list()
-
-    iname, oname, d, f = compare(infected, origin)
-    origin_linked = False
-    if len(cluster) > 0:
-        if d == 0:
-            pp.append(iname + " -> " + oname)
-            origin_linked = True
-    else:
-        if f > 1:
-            pp.append(iname + "* -> " + oname)
-        else:
-            pp.append(iname + " -> " + oname)
-
     cpaths = dict()
     opaths = dict()
     for c in cluster:
@@ -50,35 +36,56 @@ def contactTracing():
             cpaths[d][cname] = f
         else:
             cpaths[d] = {cname: f}
-        if not origin_linked:
-            cname, _, d, f = compare(c, origin)
-            if d in opaths:
-                opaths[d][cname] = f
-            else:
-                opaths[d] = {cname: f}
+        cname, _, d, f = compare(c, origin)
+        if d in opaths:
+            opaths[d][cname] = f
+        else:
+            opaths[d] = {cname: f}
 
-    if not origin_linked:
-        min_c = cpaths[min(cpaths.keys())]
-        min_o = opaths[min(opaths.keys())]
-        involved_c = set(min_c.keys()).intersection(set(min_o.keys()))
-        for cname in involved_c:
-            path = ""
-            if min_c[cname] > 1:
-                path += iname + "* -> "
+    pp = list()
+
+    iname, oname, dio, fio = compare(infected, origin)
+    lo = False
+
+    if len(cluster) > 0:
+        if min(cpaths.keys()) + min(opaths.keys()) == dio:
+            if fio > 1:
+                pp.append(iname + "* -> " + oname)
             else:
-                path += iname + " -> "
-            if min_o[cname] > 1:
-                path += cname + "* -> " + oname
-            else:
-                path += cname + " -> " + oname
-            pp.append(path)
+                pp.append(iname + " -> " + oname)
+            lo = True
+
+        min_c, min_o = dict(), dict()
+        if len(cpaths) > 0:
+            min_c = cpaths[min(cpaths.keys())]
+        if len(opaths) > 0:
+            min_o = opaths[min(opaths.keys())]
+
+        if not lo:
+            involved_c = set(min_c.keys()).intersection(set(min_o.keys()))
+            for cname in involved_c:
+                path = ""
+                if min_c[cname] > 1:
+                    path += iname + "* -> "
+                else:
+                    path += iname + " -> "
+                if min_o[cname] > 1:
+                    path += cname + "* -> " + oname
+                else:
+                    path += cname + " -> " + oname
+                pp.append(path)
+        else:
+            min_c = cpaths[min(cpaths.keys())]
+            for cname, f in min_c.items():
+                if f > 1:
+                    pp.append(iname + "* -> " + cname)
+                else:
+                    pp.append(iname + " -> " + cname)
     else:
-        min_c = cpaths[min(cpaths.keys())]
-        for cname, f in min_c.items():
-            if f > 1:
-                pp.append(iname + "* -> " + cname)
-            else:
-                pp.append(iname + " -> " + cname)
+        if fio > 1:
+            pp.append(iname + "* -> " + oname)
+        else:
+            pp.append(iname + " -> " + oname)
 
     logging.info("My result :{}".format(pp))
     return json.dumps(pp)
