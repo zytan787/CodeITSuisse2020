@@ -45,30 +45,36 @@ def evaluateBabylon():
     max_ans = -1
 
     lst = [i for i in range(no_days)]
-    big_lst = []
+    first_lst = []
     for i in range(len(lst)):
-        big_lst.append(lst[i:] + lst[:i])
+        first_lst.append(lst[i:] + lst[:i])
+    second_lst = []
+    for i in range(len(lst)-1):
+        second_lst.append(lst[i:i+1] + lst[i+2:] + lst[:i] + [lst[i+1]])
+    big_lst = [first_lst, second_lst]
 
-    for seq in big_lst:
-        books = ori_books[:]
-        ans = 0
-        for k in seq:
-            dp = [[[0,[]] for i in range(days[k]+1)] for j in range(len(books)+1)]
+    for small_lst in big_lst:
+        for seq in small_lst:
+            books = ori_books[:]
+            ans = 0
+            for k in seq:
+                print(books)
+                dp = [[[0,[]] for i in range(days[k]+1)] for j in range(len(books)+1)]
 
-            for i in range(1, len(books)+1):
-                for j in range(1, days[k]+1):
-                    if j >= books[i-1]:
-                        if (1 + dp[i-1][j-books[i-1]][0]) > dp[i-1][j][0]:
-                            dp[i][j] = [1 + dp[i-1][j-books[i-1]][0], dp[i-1][j-books[i-1]][1][:] + [i-1]]
-                        else:
-                            dp[i][j] = dp[i-1][j][:]
+                for i in range(1, len(books)+1):
+                    for j in range(1, days[k]+1):
+                        if j >= books[i-1]:
+                            if (1 + dp[i-1][j-books[i-1]][0]) > dp[i-1][j][0]:
+                                dp[i][j] = [1 + dp[i-1][j-books[i-1]][0], dp[i-1][j-books[i-1]][1][:] + [i-1]]
+                            else:
+                                dp[i][j] = dp[i-1][j][:]
 
-            ans += dp[-1][-1][0]
-            dp[-1][-1][1].sort(reverse=True)
-            for to_drop in dp[-1][-1][1]:
-                books.pop(to_drop)
+                ans += dp[-1][-1][0]
+                dp[-1][-1][1].sort(reverse=True)
+                for to_drop in dp[-1][-1][1]:
+                    books.pop(to_drop)
 
-        max_ans = max(max_ans, ans)
+            max_ans = max(max_ans, ans)
 
     result = {"optimalNumberOfBooks": max_ans}
 
