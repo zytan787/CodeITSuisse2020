@@ -2,7 +2,7 @@ import logging
 import json
 # import enchant
 # d = enchant.Dict("en_US")
-from nltk.corpus import wordnet
+from nltk import wordnet
 
 from flask import request, jsonify;
 
