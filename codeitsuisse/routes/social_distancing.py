@@ -17,6 +17,8 @@ def c(n, r):
 def num_ways(seats, people, space):
     holes = people + 1
     seat_left = seats - people - space * (people - 1)
+    if seat_left == 0:
+        return 1
     total = 0
     for i in range(1, min(holes, seat_left) + 1):
         total += c(holes, i) * c(seat_left - 1, i - 1)
