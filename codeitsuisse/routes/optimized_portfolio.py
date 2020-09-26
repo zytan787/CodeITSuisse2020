@@ -20,6 +20,9 @@ def best_future(portfolio):
     value = portfolio['Portfolio']['Value']
     s_std = portfolio['Portfolio']['SpotPrcVol']
     best = dict()
+    min_ohr = None
+    min_f_std = None
+    min_nfc = None
     for future in portfolio['IndexFutures']:
         name = future['Name']
         corr_coef = future['CoRelationCoefficient']
@@ -27,22 +30,26 @@ def best_future(portfolio):
         f_price = future['IndexFuturePrice']
         notion = future['Notional']
         opt_hr = optimal_hedge_ratio(corr_coef, s_std, f_std)
-        if len(best) == 0 or \
-                opt_hr < best['OptimalHedgeRatio'] and f_std < best['f_std']:
-            nfc = num_future_contract(opt_hr, value, f_price, notion)
-            best["HedgePositionName"] = name
-            best["OptimalHedgeRatio"] = opt_hr
-            best["NumFuturesContract"] = nfc
-            best["f_std"] = f_std
-        elif opt_hr == best['OptimalHedgeRatio'] and f_std == best['f_std']:
-            nfc = num_future_contract(opt_hr, value, f_price, notion)
-            if nfc < best['NumFuturesContract']:
-                best["HedgePositionName"] = name
-                best["OptimalHedgeRatio"] = opt_hr
-                best["NumFuturesContract"] = nfc
-                best["f_std"] = f_std
-    best.pop('f_std', None)
-    return best
+        nfc = num_future_contract(opt_hr, value, f_price, notion)
+        best[name] = {
+            "HedgePositionName": name,
+            "OptimalHedgeRatio": opt_hr,
+            "NumFuturesContract": nfc,
+            "f_std": f_std
+        }
+        if min_ohr is None or opt_hr < min_ohr[0]:
+            min_ohr = (opt_hr, name)
+        if min_f_std is None or f_std < min_f_std[0]:
+            min_f_std = (f_std, name)
+        if min_nfc is None or nfc < min_nfc[0]:
+            min_nfc = (nfc, name)
+
+    if min_ohr[1] == min_f_std[1]:
+        best[min_ohr[1]].pop('f_std', None)
+        return best[min_ohr[1]]
+    else:
+        best[min_nfc[1]].pop('f_std', None)
+        return best[min_nfc[1]]
 
 
 @app.route('/optimizedportfolio', methods=['POST'])
