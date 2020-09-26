@@ -8,6 +8,15 @@ from codeitsuisse import app
 logger = logging.getLogger(__name__)
 
 
+def update_pos(arr, pos):
+    if arr[pos] == 0:
+        arr[pos] = 1
+        return 1
+    else:
+        arr[pos] -= 1
+        return -1
+
+
 def clean(arr):
     n = len(arr)
 
@@ -20,41 +29,37 @@ def clean(arr):
     dirt = arr[0]
     while pos < last:
         pos += 1
-        if arr[pos] > 0:
-            arr[pos] -= 1
-            dirt += arr[pos]
-        else:
-            arr[pos] = 1
-            dirt += 1
+        update_pos(arr, pos)
+        dirt += arr[pos]
 
     while dirt > 0:
         if arr[pos] == 0:
             move += 1
             pos -= 1
-            if arr[pos] > 0:
-                arr[pos] -= 1
-                dirt -= 1
-            else:
-                arr[pos] = 1
-                dirt += 1
+            dirt += update_pos(arr, pos)
         else:
-            move += arr[pos] * 2 + 1
+            move += 2 * arr[pos]
             if pos > 0:
                 if arr[pos - 1] > arr[pos]:
                     arr[pos - 1] -= arr[pos]
-                    dirt -= arr[pos]
+                    dirt -= 2 * arr[pos]
+                    arr[pos] = 0
                 else:
                     dirt -= arr[pos - 1]
-                    arr[pos - 1] = (arr[pos] - arr[pos - 1] + 1) % 2
+                    arr[pos - 1] = (arr[pos] - arr[pos - 1]) % 2
+                    dirt -= arr[pos]
                     dirt += arr[pos - 1]
-                dirt -= arr[pos]
-                arr[pos] = 0
-                pos -= 1
+                if dirt > 0:
+                    pos -= 1
+                    move += 1
+                    dirt += update_pos(arr, pos)
             else:
-                arr[1] = (arr[0] + 1) % 2
-                dirt += arr[1] - arr[0]
-                arr[0] = 0
-                pos += 1
+                arr[1] = arr[0] % 2
+                dirt -= arr[0]
+                dirt += arr[1]
+                if dirt > 0:
+                    move += 1
+                    break
 
     return max(0, move)
 
