@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 def cluster():
     grid = request.get_json()
     logging.info("data sent for evaluation {}".format(grid))
-
+    ans = {}
     def count_cluster(a):
         ct = 0
         direction = [(0, 1), (1, 0), (-1, 0), (0, -1), (1, 1), (-1, -1), (1, -1), (-1, 1)]
@@ -59,7 +59,7 @@ def cluster():
 
     for x in grid:
         print(x)
-    ans = (count_cluster(new_infected))
+    ans['answer'] = (count_cluster(new_infected))
 
     logging.info("My result :{}".format(ans))
     return json.dumps(ans)
