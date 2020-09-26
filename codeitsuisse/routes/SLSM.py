@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 def slsm(boardSize, player, jumps):
     board = [i for i in range(boardSize + 1)]
+    ans = []
 
     for jump in jumps:
         temp = jump.split(":")
@@ -22,18 +23,13 @@ def slsm(boardSize, player, jumps):
         elif int(temp[0]) < int(temp[1]):
             board[int(temp[1])] = int(temp[1])
 
-    # print(board[330:])
-    x = 1
-    y = 1
+    print(board[290:])
+    x = 0
+    y = 0
     shortest_path = []
 
     while x != boardSize:
         next_6 = board[x + 1:x + 6 + 1]
-        if not next_6:
-            break
-        if boardSize in next_6:
-            shortest_path.append(next_6.index(boardSize) + 1)
-            break
 
         next_6_l = board[y + 1:y + 6 + 1]
         best_choice_l = next_6_l.index(min(next_6_l)) + 1
@@ -44,7 +40,8 @@ def slsm(boardSize, player, jumps):
         best_choice = next_6.index(max(next_6)) + 1
         shortest_path.append(best_choice)
         x = max(next_6)
-
+        ans.append(x)
+    print(ans)
     return shortest_path
 
     # board = [0 for i in range(boardSize+1)]
