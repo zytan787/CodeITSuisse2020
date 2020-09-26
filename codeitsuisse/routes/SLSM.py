@@ -29,11 +29,6 @@ def slsm(boardSize, player, jumps):
 
     while x != boardSize:
         next_6 = board[x + 1:x + 6 + 1]
-        if not next_6:
-            break
-        if boardSize in next_6:
-            shortest_path.append(next_6.index(boardSize) + 1)
-            break
 
         next_6_l = board[y + 1:y + 6 + 1]
         best_choice_l = next_6_l.index(min(next_6_l)) + 1
