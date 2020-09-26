@@ -27,7 +27,7 @@ def optimal_hedge_ratio(cc, std_spot, std_future):
 
 
 def num_future_contract(ohr, pf_value, future_price, notional):
-    return round_acc(ohr * pf_value / notional / future_price)
+    return round_acc(ohr * pf_value / future_price / notional)
 
 
 def best_future(portfolio):
