@@ -90,7 +90,10 @@ def optimizedPortfolio():
                 continue
             elif best_f['NumFuturesContract'] < cur_best_f['NumFuturesContract']:
                 best_pf_future[pf['Portfolio']['Name']] = best_f
-    outputs = [v for v in best_pf_future.values()]
+    outputs = list()
+    for v in best_pf_future.values():
+        v.pop("f_std")
+        outputs.append(v)
 
     # outputs = {'outputs': [best_future(pf) for pf in inputs]}
     logging.info("My result :{}".format(outputs))
