@@ -43,7 +43,7 @@ def cluster():
             elif y == '0':
                 uninfected += 1
     if not uninfected:
-        ans["answer"] = 0
+        ans["answer"] = len(q)
         logging.info("My result :{}".format(ans))
         return jsonify(ans)
 
