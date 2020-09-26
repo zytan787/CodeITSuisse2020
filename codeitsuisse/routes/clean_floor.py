@@ -1,29 +1,14 @@
 import logging
 import json
 
-from flask import request, jsonify;
+from flask import request, jsonify
 
-from codeitsuisse import app;
+from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
 
-move = 0
-
-
-def make_move(arr, new_pos):
-    global move
-    move += 1
-    if arr[new_pos] == 0:
-        arr[new_pos] = 1
-        return 1
-    else:
-        arr[new_pos] -= 1
-        return -1
-
 
 def clean(arr):
-    global move
-    move = 0
     n = len(arr)
 
     # get the last tile with dirt
@@ -31,18 +16,48 @@ def clean(arr):
     while last > 0 and arr[last] == 0:
         last -= 1
 
+    move = last
+    pos = 0
     dirt = sum(arr)
-    for i in range(1, last + 1):
-        dirt += make_move(arr, i)
-
-    pos = last
-    while dirt > 0:
-        if pos + 1 < n and arr[pos + 1] > 0:
-            pos += 1
+    while pos < last:
+        pos += 1
+        if arr[pos] > 0:
+            arr[pos] -= 1
+            dirt -= 1
         else:
-            pos -= 1
-        dirt += make_move(arr, pos)
+            arr[pos] = 1
+            dirt += 1
 
+    while dirt > 0:
+        if arr[pos] == 0:
+            move += 1
+            pos -= 1
+            if arr[pos] > 0:
+                arr[pos] -= 1
+                dirt -= 1
+            else:
+                arr[pos] = 1
+                dirt += 1
+        else:
+            move += arr[pos] * 2 + 1
+            if pos > 0:
+                if arr[pos - 1] > arr[pos]:
+                    arr[pos - 1] -= arr[pos]
+                    dirt -= arr[pos]
+                else:
+                    dirt -= arr[pos - 1]
+                    arr[pos - 1] = (arr[pos] - arr[pos - 1]) % 2
+                    dirt += arr[pos - 1]
+                dirt -= arr[pos]
+                arr[pos] = 0
+                pos -= 1
+            else:
+                arr[1] = arr[0] % 2
+                dirt += arr[1] - arr[0]
+                arr[0] = 0
+                pos += 1
+
+    return max(0, move)
 
 # [0, 1, 0, 2, 0, 1, 0, 2]
 # [0, 0, 0, 2, 0, 1, 0, 2]
@@ -70,8 +85,7 @@ def cleanFloor():
     inputValue = data.get("tests")
     result = {'answers': dict()}
     for k, v in inputValue.items():
-        clean(v['floor'])
-        result['answer'][k] = move
+        result['answers'][k] = clean(v['floor'])
     logging.info("My result :{}".format(result))
     return json.dumps(result)
 
