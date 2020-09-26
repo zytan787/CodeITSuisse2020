@@ -1,7 +1,7 @@
 import logging
 import json
 
-from flask import request, jsonify;
+from flask import request, jsonify
 
 from codeitsuisse import app;
 
@@ -59,7 +59,7 @@ def cluster():
 
     for x in grid:
         print(x)
-    ans['answer'] = (count_cluster(new_infected))
+    ans["answer"] = (count_cluster(new_infected))
 
     logging.info("My result :{}".format(ans))
-    return json.dumps(ans)
+    return jsonify(ans)
