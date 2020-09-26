@@ -1,7 +1,7 @@
 import logging
 import json
-# import enchant
-# d = enchant.Dict("en_US")
+import enchant
+d = enchant.Dict("en_US")
 
 from flask import request, jsonify;
 
