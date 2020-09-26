@@ -63,7 +63,7 @@ def evaluateGMO():
 
     result = {"runId":runId, "list":ans}
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return jsonify(result)
 
 
 
