@@ -2,7 +2,7 @@ import logging
 import json
 # import enchant
 # d = enchant.Dict("en_US")
-from nltk.corpus import brown
+from nltk_data.corpora import brown
 
 from flask import request, jsonify;
 
