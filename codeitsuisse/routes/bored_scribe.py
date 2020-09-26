@@ -63,7 +63,7 @@ def evaluateBoredScribe():
     logging.info("data sent for evaluation {}".format(data))
     result = []
     for el in data:
-        result.append({"id": el.get("id"), "encryptionCount":1, "originalText":decrypt(el.get("encryptedText"))})
+        result.append({"id": el.get("id"), "encryptionCount":el.get("id"), "originalText":decrypt(el.get("encryptedText"))})
     logging.info("My result :{}".format(result))
     return json.dumps(result)
 
