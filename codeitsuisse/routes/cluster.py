@@ -20,6 +20,8 @@ def cluster():
             stack = [a[x]]
             while stack:
                 ptr = stack.pop(-1)
+                if ptr in a:
+                    a.remove(ptr)
                 for d in direction:
                     x1 = ptr[0] + d[0]
                     y1 = ptr[1] + d[1]
@@ -27,23 +29,23 @@ def cluster():
                         stack.append([x1, y1])
                         a.remove([x1, y1])
             ct += 1
-        return (ct)
-
+        return ct
 
     q = []
     uninfected = 0
     new_infected = []
-    c = 0  # number of cluster
     direction = [(0, 1), (1, 0), (-1, 0), (0, -1), (1, 1), (-1, -1), (1, -1), (-1, 1)]
     for i, x in enumerate(grid):
         for j, y in enumerate(x):
             if y == '1':
                 q.append([i, j])
-                c += 1
+
             elif y == '0':
                 uninfected += 1
     if not uninfected:
-        return 0
+        ans["answer"] = len(q)
+        logging.info("My result :{}".format(ans))
+        return jsonify(ans)
 
     while q:
         ptr = q.pop(0)
@@ -59,7 +61,7 @@ def cluster():
 
     for x in grid:
         print(x)
-    ans["answer"] = (count_cluster(new_infected))
+    ans["answer"] = count_cluster(new_infected)
 
     logging.info("My result :{}".format(ans))
     return jsonify(ans)
