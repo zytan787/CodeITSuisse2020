@@ -17,12 +17,12 @@ def clean(arr):
 
     move = last
     pos = 0
-    dirt = sum(arr)
+    dirt = arr[0]
     while pos < last:
         pos += 1
         if arr[pos] > 0:
             arr[pos] -= 1
-            dirt -= 1
+            dirt += arr[pos]
         else:
             arr[pos] = 1
             dirt += 1
@@ -45,13 +45,13 @@ def clean(arr):
                     dirt -= arr[pos]
                 else:
                     dirt -= arr[pos - 1]
-                    arr[pos - 1] = (arr[pos] - arr[pos - 1]) % 2
+                    arr[pos - 1] = (arr[pos] - arr[pos - 1] + 1) % 2
                     dirt += arr[pos - 1]
                 dirt -= arr[pos]
                 arr[pos] = 0
                 pos -= 1
             else:
-                arr[1] = arr[0] % 2
+                arr[1] = (arr[0] + 1) % 2
                 dirt += arr[1] - arr[0]
                 arr[0] = 0
                 pos += 1
@@ -84,8 +84,7 @@ def cleanFloor():
     inputValue = data.get("tests")
     result = {'answers': dict()}
     for k, v in inputValue.items():
-        # result['answers'][k] = clean(v['floor'])
-        result['answers'][k] = 1
+        result['answers'][k] = clean(v['floor'])
     logging.info("My result :{}".format(result))
     return json.dumps(result)
 
