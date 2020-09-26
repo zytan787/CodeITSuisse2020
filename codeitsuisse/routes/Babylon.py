@@ -55,6 +55,18 @@ def num_books_for_min(books_left, minute, books_read):
     return all_books_sets
 
 
+def max_num_books(books_left, days):
+    max_ans = 0
+    for minute in days:
+        books = num_books_for_min(books_left, minute, [])
+        max_books = books[-1]
+        max_ans += len(max_books)
+        for i in max_books:
+            books_left.remove(i)
+    return max_ans
+
+
+
 @app.route('/olympiad-of-babylon', methods=['POST'])
 def evaluateBabylon():
     data = request.get_json()
@@ -65,15 +77,12 @@ def evaluateBabylon():
     # days = data.get("days")
 
     books_left = sorted(data.get("books"))
-    max_ans = 0
-    days = sorted(data.get("days"))
+    days = sorted(data.get("days"), reverse=True)
 
-    for minute in days:
-        books = num_books_for_min(books_left, minute, [])
-        max_books = max(books, key=lambda x: sum(x))
-        max_ans += len(max_books)
-        for i in max_books:
-            books_left.remove(i)
+    max_ans = max(
+        max_num_books(books_left.copy(), days),
+        max_num_books(books_left.copy(), days[::-1])
+    )
 
     # max_ans = -1
     #
