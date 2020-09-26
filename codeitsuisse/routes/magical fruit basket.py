@@ -15,17 +15,17 @@ def evaluateFruitBasket():
     data = json.loads(data)
     for key in data:
         if key == "maPomegranate":
-            weight += data[key] * 30
+            weight += data[key] * 20
         elif key == "maRamubutan":
             weight += data[key] * 35
         elif key == "maAvocado":
             weight += data[key] * 10
         elif key == "maWatermelon":
-            weight += data[key] * 80    
+            weight += data[key] * 60    
         elif key == "maApple":
-            weight += data[key] * 15
+            weight += data[key] * 20
         elif key == "maPineapple":
-            weight += data[key] * 60
+            weight += data[key] * 80
     result = weight
     logging.info("My result :{}".format(result))
     return jsonify(result)
