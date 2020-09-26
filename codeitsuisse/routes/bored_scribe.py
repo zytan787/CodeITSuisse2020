@@ -1,10 +1,10 @@
 import logging
 import json
-# import enchant
-# d = enchant.Dict("en_US")
-import nltk
-nltk.data.path.append('D:\CodeIT Suisse 2020\CodeITSuisse2020\nltk_data')
-from nltk.corpus import brown
+import enchant
+d = enchant.Dict("en_US")
+# import nltk
+# nltk.data.path.append('D:\CodeIT Suisse 2020\CodeITSuisse2020\nltk_data')
+# from nltk.corpus import brown
 
 from flask import request, jsonify;
 
@@ -58,7 +58,7 @@ def decrypt(s):
         real_ans = ""
         word = False
         for j in range(2, len(ans)):
-            if ans[:j] in brown.words():
+            if d.check(ans[:j]):
                 word = True
                 break
 
