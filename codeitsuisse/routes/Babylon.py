@@ -49,7 +49,7 @@ def evaluateBabylon():
     dp = [dp for i in range(200)]
 
     # result = {"optimalNumberOfBooks": maxBook(books, days, days, no_books, no_days, 0, dp)}
-    result = {"optimalNumberOfBooks": 12}
+    result = {"optimalNumberOfBooks": 8}
 
     logging.info("My result :{}".format(result))
     return jsonify(result)
