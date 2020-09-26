@@ -10,7 +10,6 @@ logger = logging.getLogger(__name__)
 
 
 def c(n, r):
-    print(n, r)
     f = math.factorial
     return f(n) // f(r) // f(n - r)
 
