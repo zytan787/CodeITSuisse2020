@@ -2,7 +2,6 @@ import logging
 import socket
 from codeitsuisse import  app
 import nltk
-nltk.download()
 logger = logging.getLogger(__name__)
 
 @app.route('/', methods=['GET'])
