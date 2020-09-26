@@ -45,14 +45,10 @@ def revisitGeo():
         if not min(d_shape[c[0]]['y'], d_shape[c[1]]['y']) <= y_cood <= max(d_shape[c[0]]['y'],d_shape[c[1]]['y']):
             return
 
-        if math.floor(x_cood) == math.ceil(x_cood):
-            x_cood = int(x_cood)
-        if math.floor(y_cood) == math.ceil(y_cood):
-            y_cood = int(y_cood)
-
         return {'x':round(x_cood, 2), 'y':round(y_cood, 2)}
 
-    for c in [(x,x+1)for x in range(len(d_shape)-1)]+[(0, len(d_shape)-1)]:
+    arr = [(x,x+1)for x in range(len(d_shape)-1)]+[(0, len(d_shape)-1)] if len(d_shape)!=2 else [(x,x+1)for x in range(len(d_shape)-1)]
+    for c in arr:
         a = (find_intercept(c))
         if a:
             print(c)
