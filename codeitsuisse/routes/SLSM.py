@@ -24,6 +24,7 @@ def slsm(boardSize, player, jumps):
             board[int(temp[1])] = int(temp[1])
 
     x = 0
+    y = 0
     shortest_path = []
 
     while x != boardSize:
@@ -34,22 +35,16 @@ def slsm(boardSize, player, jumps):
             shortest_path.append(next_6.index(boardSize - 1) + 1)
             break
 
+        next_6_l = board[y + 1:y + 6 + 1]
+        best_choice_l= next_6_l.index(min(next_6_l)) + 1
+        for _ in range(player-1):
+            shortest_path.append(best_choice_l)
+        y = min(next_6_l)
+
         best_choice = next_6.index(max(next_6)) + 1
         shortest_path.append(best_choice)
         x = max(next_6)
 
-    y = 0
-    loser_path = []
-    while len(loser_path) < len(shortest_path):
-        next_6 = board[y + 1:y + 6 + 1]
-        best_choice = next_6.index(min(next_6)) + 1
-        loser_path.append(best_choice)
-        y = min(next_6)
-    print(shortest_path)
-    print(loser_path)
-
-    for i in range(len(shortest_path)):
-        ans.extend([loser_path[i]] * (player - 1) + [shortest_path[i]])
 
     return ans
     # board = [0 for i in range(boardSize+1)]
