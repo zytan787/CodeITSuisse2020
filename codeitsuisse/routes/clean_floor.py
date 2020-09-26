@@ -8,49 +8,39 @@ from codeitsuisse import app
 logger = logging.getLogger(__name__)
 
 def clean(arr):
-    # ans = 0
-    # for i in range(len(arr)-2):
-    #     if arr[i] == 0:
-    #         continue
-    #     _sum = arr[i] + arr[i+1]
-    #     _diff = arr[i] - arr[i+1]
-    #     arr[i] = 0
-    #     if _diff == 0:
-    #         if _sum % 2 == 0:
-    #             steps = _sum + 1
-    #         else:
-    #             steps = _sum
-    #     elif _diff > 0:
-    #         if _diff % 2 != 0:
-    #             steps = _sum + _diff + 1
-    #         else:
-    #             steps = _sum + _diff
-    #     elif _diff < 0:
-    #         if abs(_diff) % 2 != 0:
-    #             steps = _sum + abs(_diff) - 1
-    #         else:
-    #             steps = _sum + abs(_diff)
+    ans = 0
+    n = len(arr)
+    if arr[0] > 0:
+        value = arr[0]
+        ans += value * 2
+        if arr[0] == arr[1]:
+            arr[1] = 0
+        else:
+            arr[1] -= abs(arr[1] - arr[0])
+        if arr[1] < 0:
+            arr[1] = abs(arr[1]) % 2 == 0
 
-    #     ans += steps
-    #     arr[i+1] = steps % 2 == 0
+    for i in range(1, n-1):
+        ans += 1
+        if arr[i] == 0:
+            arr[i] = 1
+        else:
+            arr[i] -= 1
+        value = arr[i]
+        ans += value * 2
+        if arr[i] == arr[i+1]:
+            arr[i+1] = 0
+        else:
+            arr[i+1] -= abs(arr[i+1] - arr[i])
+        if arr[i+1] < 0:
+            arr[i+1] = abs(arr[i+1]) % 2 == 0
 
-    # _sum = arr[-2] + arr[-1]
-    # _diff = arr[-2] - arr[-1]
-
-    # if _diff == 0:
-    #     steps = _sum
-    # elif _diff > 0:
-    #     if _diff % 2 != 0:
-    #         steps = _sum + _diff + 1
-    #     else:
-    #         steps = _sum + _diff
-    # elif _diff < 0:
-    #     if abs(_diff) % 2 != 0:
-    #         steps = _sum + abs(_diff) - 1
-    #     else:
-    #         steps = _sum + abs(_diff)
-
-    # ans += steps
+    if arr[-1] > 0:
+        if arr[-1] % 2 == 0:
+            ans += arr[-1] * 2
+        else:
+            ans += arr[-1] * 2 - 1
+    return ans
 
     # ans = 0
     # i = 1
@@ -91,27 +81,27 @@ def clean(arr):
     #                 right = False
     #     ans += 1
 
-    ans = 0
-    n = len(arr)
-    current_position = 0
-    count = arr.count(0)
-    while(count < n):
-        if current_position == 0:
-            current_position += 1
-        elif current_position == n-1:
-            current_position -= 1
-        else:
-            if arr[current_position-1] > arr[current_position+1]:
-                current_position -= 1
-            else:
-                current_position += 1
+    # ans = 0
+    # n = len(arr)
+    # current_position = 0
+    # count = arr.count(0)
+    # while(count < n):
+    #     if current_position == 0:
+    #         current_position += 1
+    #     elif current_position == n-1:
+    #         current_position -= 1
+    #     else:
+    #         if arr[current_position-1] > arr[current_position+1]:
+    #             current_position -= 1
+    #         else:
+    #             current_position += 1
 
-        arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
-        if arr[current_position] == 0:
-            count += 1
-        ans += 1
+    #     arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
+    #     if arr[current_position] == 0:
+    #         count += 1
+    #     ans += 1
 
-    return ans
+    # return ans
             
             
 
@@ -205,9 +195,9 @@ def cleanFloor():
     inputValue = data.get("tests")
     result = {'answers': dict()}
     for k, v in inputValue.items():
-        result['answers'][k] = clean(v['floor'])
+        result['answers'][k-1] = clean(v['floor'])
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return jsonify(result)
 
 
 
