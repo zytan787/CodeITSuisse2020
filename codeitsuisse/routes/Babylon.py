@@ -70,7 +70,8 @@ def evaluateBabylon():
 
     for minute in days:
         books = num_books_for_min(books_left, minute, [])
-        max_books = max(books, key=lambda x: sum(x))
+        print(books)
+        max_books = books[-1]
         max_ans += len(max_books)
         for i in max_books:
             books_left.remove(i)
