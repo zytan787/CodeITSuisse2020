@@ -2,8 +2,6 @@ import logging
 import json
 # import enchant
 # d = enchant.Dict("en_US")
-import nltk
-nltk.download('words')
 from nltk.corpus import words
 
 from flask import request, jsonify;
