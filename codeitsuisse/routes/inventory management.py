@@ -74,7 +74,7 @@ def evaluateInventoryManagement():
             break
         searchResult.extend(value)
     
-    result = [{"searchItemName":name, "searchResult":searchResult}]
+    result = {"searchItemName":name, "searchResult":searchResult}
     logging.info("My result :{}".format(result))
     return json.dumps(result)
 
