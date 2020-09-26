@@ -1,7 +1,7 @@
 import logging
 import json
-import enchant
-d = enchant.Dict("en_US")
+# import enchant
+# d = enchant.Dict("en_US")
 # import nltk
 # nltk.data.path.append('D:\CodeIT Suisse 2020\CodeITSuisse2020\nltk_data')
 # from nltk.corpus import brown
