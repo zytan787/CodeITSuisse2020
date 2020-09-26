@@ -94,7 +94,8 @@ def clean(arr):
     ans = 0
     n = len(arr)
     current_position = 0
-    while(arr.count(0) < n):
+    count = arr.count(0)
+    while(count < n):
         if current_position == 0:
             current_position += 1
         elif current_position == n-1:
@@ -106,6 +107,8 @@ def clean(arr):
                 current_position += 1
 
         arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
+        if arr[current_position] == 0:
+            count += 1
         ans += 1
 
     return ans
