@@ -52,40 +52,63 @@ def clean(arr):
 
     # ans += steps
 
+    # ans = 0
+    # i = 1
+    # n = len(arr)
+    # right = True
+    # while i < n:
+    #     print(i)
+    #     if arr.count(0) == n:
+    #         break
+    #     if i != n-1 and arr[i+1] == 0:
+    #         if right:
+    #             i -= 1
+    #             right = 0
+    #         else:
+    #             i += 1
+    #             right = True
+    #     if arr[i] == 0:
+    #         arr[i] = 1
+    #         if right and i < n-1:
+    #             i += 1
+    #         else:
+    #             i -= 1
+    #             right = False
+    #     else:
+    #         arr[i] -= 1
+    #         if arr[i] == 0:
+    #             if right:
+    #                 i -= 1
+    #                 right = False
+    #             else:
+    #                 i += 1
+    #                 right = True
+    #         else:
+    #             if right and i < n-1:
+    #                 i += 1
+    #             else:
+    #                 i -= 1
+    #                 right = False
+    #     ans += 1
+
     ans = 0
-    i = 1
     n = len(arr)
-    right = True
-    while i < n:
-        if arr.count(0) == n:
-            break
-        if i != n-1 and arr[i+1] == 0:
-            if right:
-                i -= 1
-                right = False
-            else:
-                i += 1
-                right = True
-        if arr[i] == 0:
-            arr[i] = 1
-            if right:
-                i += 1
-            else:
-                i -= 1
+    current_position = 0
+    count = arr.count(0)
+    while(count < n):
+        if current_position == 0:
+            current_position += 1
+        elif current_position == n-1:
+            current_position -= 1
         else:
-            arr[i] -= 1
-            if arr[i] == 0:
-                if right:
-                    i -= 1
-                    right = False
-                else:
-                    i += 1
-                    right = True
+            if arr[current_position-1] > arr[current_position+1]:
+                current_position -= 1
             else:
-                if right:
-                    i += 1
-                else:
-                    i -= 1
+                current_position += 1
+
+        arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
+        if arr[current_position] == 0:
+            count += 1
         ans += 1
 
     return ans
