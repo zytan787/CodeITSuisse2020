@@ -17,7 +17,7 @@ def evaluateFruitBasket():
         if key == "maPomegranate":
             weight += data[key] * 20
         elif key == "maRamubutan":
-            weight += data[key] * 35
+            weight += data[key] * 15
         elif key == "maAvocado":
             weight += data[key] * 10
         elif key == "maWatermelon":
