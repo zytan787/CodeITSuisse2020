@@ -197,7 +197,7 @@ def cleanFloor():
     for k, v in inputValue.items():
         result['answers'][k] = clean(v['floor'])
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return jsonify(result)
 
 
 
