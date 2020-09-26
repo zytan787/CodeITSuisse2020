@@ -8,24 +8,76 @@ from codeitsuisse import app
 logger = logging.getLogger(__name__)
 
 def clean(arr):
-    ans = 0
-    current_position = 0
-    n = len(arr)
+    # ans = 0
+    # for i in range(len(arr)-2):
+    #     if arr[i] == 0:
+    #         continue
+    #     _sum = arr[i] + arr[i+1]
+    #     _diff = arr[i] - arr[i+1]
+    #     arr[i] = 0
+    #     if _diff == 0:
+    #         if _sum % 2 == 0:
+    #             steps = _sum + 1
+    #         else:
+    #             steps = _sum
+    #     elif _diff > 0:
+    #         if _diff % 2 != 0:
+    #             steps = _sum + _diff + 1
+    #         else:
+    #             steps = _sum + _diff
+    #     elif _diff < 0:
+    #         if abs(_diff) % 2 != 0:
+    #             steps = _sum + abs(_diff) - 1
+    #         else:
+    #             steps = _sum + abs(_diff)
 
-    while not all(v == 0 for v in arr):
-        if current_position == 0:
-            current_position += 1
-            arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
-        elif current_position == n - 1:
-            current_position -= 1
-            arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
-        else:
-            if arr[current_position-1] > arr[current_position+1]:
-                current_position -= 1
-                arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
+    #     ans += steps
+    #     arr[i+1] = steps % 2 == 0
+
+    # _sum = arr[-2] + arr[-1]
+    # _diff = arr[-2] - arr[-1]
+
+    # if _diff == 0:
+    #     steps = _sum
+    # elif _diff > 0:
+    #     if _diff % 2 != 0:
+    #         steps = _sum + _diff + 1
+    #     else:
+    #         steps = _sum + _diff
+    # elif _diff < 0:
+    #     if abs(_diff) % 2 != 0:
+    #         steps = _sum + abs(_diff) - 1
+    #     else:
+    #         steps = _sum + abs(_diff)
+
+    # ans += steps
+
+    ans = 0
+    i = 1
+    n = len(arr)
+    right = True
+    while i < n:
+        if arr.count(0) == n:
+            break
+        if i != n-1 and arr[i+1] == 0:
+            if right:
+                i -= 1
+                right = False
             else:
-                current_position += 1
-                arr[current_position] = 1 if arr[current_position] == 0 else arr[current_position] - 1
+                i += 1
+                right = True
+        if arr[i] == 0:
+            arr[i] = 1
+            i += 1
+        else:
+            arr[i] -= 1
+            if arr[i] == 0:
+                if right:
+                    i -= 1
+                    right = False
+                else:
+                    i += 1
+                    right = True
         ans += 1
 
     return ans
