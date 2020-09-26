@@ -77,25 +77,25 @@ def optimizedPortfolio():
     logging.info("data sent for evaluation {}".format(data))
     inputs = data.get("inputs")
 
-    best_pf_future = dict()
-    for pf in inputs:
-        best_f = best_future(pf)
-        if pf['Portfolio']['Name'] not in best_pf_future:
-            best_pf_future[pf['Portfolio']['Name']] = best_f
-        else:
-            cur_best_f = best_pf_future[pf['Portfolio']['Name']]
-            if best_f['OptimalHedgeRatio'] < cur_best_f['OptimalHedgeRatio'] and best_f['f_std'] < cur_best_f['f_std']:
-                best_pf_future[pf['Portfolio']['Name']] = best_f
-            elif best_f['OptimalHedgeRatio'] >= cur_best_f['OptimalHedgeRatio'] and best_f['f_std'] >= cur_best_f['f_std']:
-                continue
-            elif best_f['NumFuturesContract'] < cur_best_f['NumFuturesContract']:
-                best_pf_future[pf['Portfolio']['Name']] = best_f
-    outputs = list()
-    for v in best_pf_future.values():
-        v.pop("f_std")
-        outputs.append(v)
+    # best_pf_future = dict()
+    # for pf in inputs:
+    #     best_f = best_future(pf)
+    #     if pf['Portfolio']['Name'] not in best_pf_future:
+    #         best_pf_future[pf['Portfolio']['Name']] = best_f
+    #     else:
+    #         cur_best_f = best_pf_future[pf['Portfolio']['Name']]
+    #         if best_f['OptimalHedgeRatio'] < cur_best_f['OptimalHedgeRatio'] and best_f['f_std'] < cur_best_f['f_std']:
+    #             best_pf_future[pf['Portfolio']['Name']] = best_f
+    #         elif best_f['OptimalHedgeRatio'] >= cur_best_f['OptimalHedgeRatio'] and best_f['f_std'] >= cur_best_f['f_std']:
+    #             continue
+    #         elif best_f['NumFuturesContract'] < cur_best_f['NumFuturesContract']:
+    #             best_pf_future[pf['Portfolio']['Name']] = best_f
+    # outputs = list()
+    # for v in best_pf_future.values():
+    #     v.pop("f_std")
+    #     outputs.append(v)
 
-    # outputs = {'outputs': [best_future(pf) for pf in inputs]}
+    outputs = {'outputs': [best_future(pf) for pf in inputs]}
     logging.info("My result :{}".format(outputs))
     return json.dumps(outputs)
 
