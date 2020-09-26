@@ -1,9 +1,9 @@
 import logging
 import json
 
-from flask import request, jsonify;
+from flask import request, jsonify
 
-from codeitsuisse import app;
+from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
 
@@ -66,11 +66,10 @@ def evaluateBabylon():
 
     books_left = sorted(data.get("books"))
     max_ans = 0
-    days = sorted(data.get("days"), reverse=True)
+    days = sorted(data.get("days"))
 
     for minute in days:
         books = num_books_for_min(books_left, minute, [])
-        print(books)
         max_books = max(books, key=lambda x: sum(x))
         max_ans += len(max_books)
         for i in max_books:
