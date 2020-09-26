@@ -16,7 +16,7 @@ def evaluateFruitBasket():
     n_banana = data.get("maBanana")
     result = (n_apple + n_watermelon + n_banana) * 50
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return jsonify(result)
 
 
 
