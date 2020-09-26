@@ -2,7 +2,7 @@ import logging
 import json
 
 from flask import request, jsonify
-
+import math
 from codeitsuisse import app
 from itertools import combinations as C
 
@@ -44,6 +44,11 @@ def revisitGeo():
             return
         if not min(d_shape[c[0]]['y'], d_shape[c[1]]['y']) <= y_cood <= max(d_shape[c[0]]['y'],d_shape[c[1]]['y']):
             return
+
+        if math.floor(x_cood) == math.ceil(x_cood):
+            x_cood = int(x_cood)
+        if math.floor(y_cood) == math.ceil(y_cood):
+            y_cood = int(y_cood)
 
         return {'x':round(x_cood, 2), 'y':round(y_cood, 2)}
 
