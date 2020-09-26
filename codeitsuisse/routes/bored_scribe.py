@@ -16,31 +16,35 @@ def decrypt(s):
     palindromes = list(palindromes)
     palindromes = sorted(palindromes, key=lambda x:len(x), reverse=True)
 
-    for i in range(26):
-        shift = 0
-        ori_string = ""
-        alpha = ord(palindromes[0][0]) - 97
-        diff = alpha - i
-        diff = diff if diff >= 0  else 26+diff
-        for char in palindromes[0]:
-            code = (ord(char) - 97 + diff) % 26 + 97
-            ori_string += chr(code)
-            shift += code
-        shift += len(palindromes)
-        
-        found = True
-        for j in range(len(ori_string)):
-            if chr((ord(ori_string[j]) - 97 + shift) % 26 + 97) != palindromes[0][j]:
-                found = False
+    if palindromes:
+        for i in range(26):
+            shift = 0
+            ori_string = ""
+            alpha = ord(palindromes[0][0]) - 97
+            diff = alpha - i
+            diff = diff if diff >= 0  else 26+diff
+            for char in palindromes[0]:
+                code = (ord(char) - 97 + diff) % 26 + 97
+                ori_string += chr(code)
+                shift += code
+            shift += len(palindromes)
+            
+            found = True
+            for j in range(len(ori_string)):
+                if chr((ord(ori_string[j]) - 97 + shift) % 26 + 97) != palindromes[0][j]:
+                    found = False
+                    break
+
+            if found:
                 break
 
-        if found:
-            break
+        ans = ""
 
-    ans = ""
+        for char in s:
+            ans += chr((ord(char) - 97 + diff) % 26 + 97)
 
-    for char in s:
-        ans += chr((ord(char) - 97 + diff) % 26 + 97)
+    else:
+        ans = s
 
     return ans
 
