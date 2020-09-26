@@ -7,61 +7,108 @@ from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
 
-
-def update_pos(arr, pos):
-    if arr[pos] == 0:
-        arr[pos] = 1
-        return 1
-    else:
-        arr[pos] -= 1
-        return -1
-
-
 def clean(arr):
-    n = len(arr)
-
-    last = n - 1
-    while last > 0 and arr[last] == 0:
-        last -= 1
-
-    move = last
-    pos = 0
-    dirt = arr[0]
-    while pos < last:
-        pos += 1
-        update_pos(arr, pos)
-        dirt += arr[pos]
-
-    while dirt > 0:
-        if arr[pos] == 0:
-            move += 1
-            pos -= 1
-            dirt += update_pos(arr, pos)
-        else:
-            move += 2 * arr[pos]
-            if pos > 0:
-                if arr[pos - 1] > arr[pos]:
-                    arr[pos - 1] -= arr[pos]
-                    dirt -= 2 * arr[pos]
-                    arr[pos] = 0
-                else:
-                    dirt -= arr[pos - 1]
-                    arr[pos - 1] = (arr[pos] - arr[pos - 1]) % 2
-                    dirt -= arr[pos]
-                    dirt += arr[pos - 1]
-                if dirt > 0:
-                    pos -= 1
-                    move += 1
-                    dirt += update_pos(arr, pos)
+    ans = 0
+    for i in range(len(arr)-2):
+        _sum = arr[i] + arr[i+1]
+        _diff = arr[i] - arr[i+1]
+        arr[i] = 0
+        if _diff == 0:
+            if _sum % 2 == 0:
+                steps = _sum + 1
             else:
-                arr[1] = arr[0] % 2
-                dirt -= arr[0]
-                dirt += arr[1]
-                if dirt > 0:
-                    move += 1
-                    break
+                steps = _sum
+        elif _diff > 0:
+            if _diff % 2 != 0:
+                steps = _sum + _diff + 1
+            else:
+                steps = _sum + _diff
+        elif _diff < 0:
+            if abs(_diff) % 2 != 0:
+                steps = _sum + abs(_diff) - 1
+            else:
+                steps = _sum + abs(_diff)
 
-    return max(0, move)
+        ans += steps
+        arr[i+1] = steps % 2 == 0
+
+    _sum = arr[-2] + arr[-1]
+    _diff = arr[-2] - arr[-1]
+
+    if _diff == 0:
+        steps = _sum
+    elif _diff > 0:
+        if _diff % 2 != 0:
+            steps = _sum + _diff + 1
+        else:
+            steps = _sum + _diff
+    elif _diff < 0:
+        if abs(_diff) % 2 != 0:
+            steps = _sum + abs(_diff) - 1
+        else:
+            steps = _sum + abs(_diff)
+
+    ans += steps
+
+    return ans
+            
+            
+
+
+# def update_pos(arr, pos):
+#     if arr[pos] == 0:
+#         arr[pos] = 1
+#         return 1
+#     else:
+#         arr[pos] -= 1
+#         return -1
+
+
+# def clean(arr):
+#     n = len(arr)
+
+#     last = n - 1
+#     while last > 0 and arr[last] == 0:
+#         last -= 1
+
+#     move = last
+#     pos = 0
+#     dirt = arr[0]
+#     while pos < last:
+#         pos += 1
+#         update_pos(arr, pos)
+#         dirt += arr[pos]
+
+#     while dirt > 0:
+#         if arr[pos] == 0:
+#             move += 1
+#             pos -= 1
+#             dirt += update_pos(arr, pos)
+#         else:
+#             move += 2 * arr[pos]
+#             if pos > 0:
+#                 if arr[pos - 1] > arr[pos]:
+#                     arr[pos - 1] -= arr[pos]
+#                     dirt -= 2 * arr[pos]
+#                     arr[pos] = 0
+#                 else:
+#                     dirt -= arr[pos - 1]
+#                     arr[pos - 1] = (arr[pos] - arr[pos - 1]) % 2
+#                     dirt -= arr[pos]
+#                     dirt += arr[pos - 1]
+#                 if dirt > 0:
+#                     pos -= 1
+#                     move += 1
+#                     dirt += update_pos(arr, pos)
+#             else:
+#                 arr[1] = arr[0] % 2
+#                 dirt -= arr[0]
+#                 dirt += arr[1]
+#                 if dirt > 0:
+#                     move += 1
+#                     break
+
+#     return max(0, move)
 
 # {
 #   "tests": {
