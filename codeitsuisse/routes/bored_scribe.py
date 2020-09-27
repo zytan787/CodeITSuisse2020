@@ -84,6 +84,8 @@ def decrypt(s):
         else:
             real_ans = ans
 
+    if encryption_count == 5:
+        real_ans = ans
     return real_ans, encryption_count
 
 def expandAroundCenter(s, l, r, palindromes):
