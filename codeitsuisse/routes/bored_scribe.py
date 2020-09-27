@@ -22,9 +22,9 @@ def decrypt(s):
     encryption_count = 0
 
     i = 0
-    word = False
     while i < len(ans):
-        for j in range(2, 10):
+        word = False
+        for j in range(2, 6):
             if ans[i:i+j] in words:
                 word = True
                 real_ans += ans[i:i+j] + " "
@@ -37,7 +37,7 @@ def decrypt(s):
 
     real_ans = real_ans.strip()
 
-    while not real_ans and encryption_count < 10:
+    while not real_ans and encryption_count < 6:
         encryption_count += 1
         s = ans
         palindromes = set()
@@ -77,8 +77,8 @@ def decrypt(s):
 
         i = 0
         real_ans = ""
-        word = False
         while i < len(ans):
+            word = False
             for j in range(2, 10):
                 if ans[i:i+j] in words:
                     word = True
@@ -92,7 +92,7 @@ def decrypt(s):
 
         real_ans = real_ans.strip()
 
-    if encryption_count == 10:
+    if encryption_count == 6 and not real_ans:
         real_ans = ans
     return real_ans, encryption_count
 
