@@ -106,7 +106,7 @@ def evaluateBoredScribe():
         originalText, encryptionCount = decrypt(el.get("encryptedText"))
         result.append({"id": el.get("id"), "encryptionCount":encryptionCount, "originalText":originalText})
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return jsonify(result)
 
 
 
