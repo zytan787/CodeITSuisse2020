@@ -22,9 +22,12 @@ def decrypt(s):
     encryption_count = 0
 
     word = False
-    for j in range(len(ans),2,-1):
-        if ans[:j] in words:
-            word = True
+    for i in range(len(ans)):
+        for j in range(len(ans),2,-1):
+            if ans[i:j] in words:
+                word = True
+                break
+        if word:
             break
 
     if not word:
@@ -41,7 +44,7 @@ def decrypt(s):
         real_ans = ans
         return real_ans, encryption_count
 
-    while not real_ans and encryption_count < 8:
+    while not real_ans and encryption_count < 6:
         encryption_count += 1
         s = ans
         palindromes = set()
@@ -80,9 +83,12 @@ def decrypt(s):
                 ans += chr((ord(char) - 97 + diff) % 26 + 97)
 
         word = False
-        for j in range(len(ans),2,-1):
-            if ans[:j] in words:
-                word = True
+        for i in range(len(ans)):
+            for j in range(len(ans),2,-1):
+                if ans[i:j] in words:
+                    word = True
+                    break
+            if word:
                 break
 
         if not word:
@@ -99,7 +105,7 @@ def decrypt(s):
             real_ans = ans
             return real_ans, encryption_count
 
-    if encryption_count == 8 and not real_ans:
+    if encryption_count == 6 and not real_ans:
         real_ans = ans
     return real_ans, encryption_count
 
