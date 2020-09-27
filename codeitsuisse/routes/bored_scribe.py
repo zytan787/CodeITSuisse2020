@@ -41,7 +41,7 @@ def decrypt(s):
         real_ans = ans
         return real_ans, encryption_count
 
-    while not real_ans:
+    while not real_ans and encryption_count < 15:
         encryption_count += 1
         s = ans
         palindromes = set()
@@ -99,8 +99,8 @@ def decrypt(s):
             real_ans = ans
             return real_ans, encryption_count
 
-    # if encryption_count == 15 and not real_ans:
-    #     real_ans = ans
+    if encryption_count == 15 and not real_ans:
+        real_ans = ans
     return real_ans, encryption_count
 
 def expandAroundCenter(s, l, r, palindromes):
