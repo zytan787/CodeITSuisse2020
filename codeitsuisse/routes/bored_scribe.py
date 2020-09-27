@@ -22,8 +22,8 @@ def decrypt(s):
     encryption_count = 0
 
     word = False
-    for j in range(len(ans)-4):
-        if ans[j:j+4] in words:
+    for j in range(len(ans),1,-1):
+        if ans[:j] in words:
             word = True
             break
 
@@ -80,8 +80,8 @@ def decrypt(s):
                 ans += chr((ord(char) - 97 + diff) % 26 + 97)
 
         word = False
-        for j in range(len(ans)-4):
-            if ans[j:j+4] in words:
+        for j in range(len(ans),1,-1):
+            if ans[:j] in words:
                 word = True
                 break
 
