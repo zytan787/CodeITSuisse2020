@@ -21,24 +21,24 @@ def decrypt(s):
     real_ans = ""
     encryption_count = 0
 
-    i = 0
     word = False
-    for j in range(2, len(ans)):
-        if ans[:j] in words:
+    for j in range(len(ans)-4):
+        if ans[j:j+4] in words:
             word = True
-            real_ans += ans[:j] + " "
             break
 
     if not word:
         real_ans = ""
     else:
-        while j < len(ans):
-            for k in range(1, len(ans)-j):
-                if ans[j:j+k] in words:
-                    real_ans += ans[j:j+k] + " "
-                    j += k
+        # i = 0
+        # while i < len(ans):
+        #     for k in range(2, len(ans)-i):
+        #         if ans[i:i+k] in words:
+        #             real_ans += ans[i:i+k] + " "
+        #             i += k
     
-        real_ans = real_ans.strip()
+        # real_ans = real_ans.strip()
+        real_ans = ans
         return real_ans, encryption_count
 
     while not real_ans and encryption_count < 6:
@@ -79,24 +79,24 @@ def decrypt(s):
             for char in s:
                 ans += chr((ord(char) - 97 + diff) % 26 + 97)
 
-        i = 0
         word = False
-        for j in range(2, len(ans)):
-            if ans[:j] in words:
+        for j in range(len(ans)-4):
+            if ans[j:j+4] in words:
                 word = True
-                real_ans += ans[:j] + " "
                 break
 
         if not word:
             real_ans = ""
         else:
-            while j < len(ans):
-                for k in range(1, len(ans)-j):
-                    if ans[j:j+k] in words:
-                        real_ans += ans[j:j+k] + " "
-                        j += k
+            # i = 0
+            # while i < len(ans):
+            #     for k in range(2, len(ans)-i):
+            #         if ans[i:i+k] in words:
+            #             real_ans += ans[i:i+k] + " "
+            #             i += k
         
-            real_ans = real_ans.strip()
+            # real_ans = real_ans.strip()
+            real_ans = ans
             return real_ans, encryption_count
 
     if encryption_count == 6 and not real_ans:
