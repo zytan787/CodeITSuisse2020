@@ -22,7 +22,7 @@ def decrypt(s):
     encryption_count = 0
 
     word = False
-    for j in range(len(ans),1,-1):
+    for j in range(len(ans),2,-1):
         if ans[:j] in words:
             word = True
             break
@@ -41,7 +41,7 @@ def decrypt(s):
         real_ans = ans
         return real_ans, encryption_count
 
-    while not real_ans and encryption_count < 15:
+    while not real_ans:
         encryption_count += 1
         s = ans
         palindromes = set()
@@ -80,7 +80,7 @@ def decrypt(s):
                 ans += chr((ord(char) - 97 + diff) % 26 + 97)
 
         word = False
-        for j in range(len(ans),1,-1):
+        for j in range(len(ans),2,-1):
             if ans[:j] in words:
                 word = True
                 break
@@ -99,8 +99,8 @@ def decrypt(s):
             real_ans = ans
             return real_ans, encryption_count
 
-    if encryption_count == 15 and not real_ans:
-        real_ans = ans
+    # if encryption_count == 15 and not real_ans:
+    #     real_ans = ans
     return real_ans, encryption_count
 
 def expandAroundCenter(s, l, r, palindromes):
