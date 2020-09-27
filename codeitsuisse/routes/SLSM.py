@@ -19,10 +19,11 @@ def slsm(boardSize, player, jumps):
         elif int(temp[1]) == 0:
             board[int(temp[0])] = '-'
         elif int(temp[0]) > int(temp[1]):
-            board[int(temp[1])] = int(temp[0])
+            board[int(temp[0])] = int(temp[1])
         elif int(temp[0]) < int(temp[1]):
             board[int(temp[0])] = int(temp[1])
-    print(board)
+    for a in range(0, boardSize + 1, 10):
+        print(board[a:a + 10])
 
     def findmax(k):
         from_mirror = False
@@ -34,12 +35,12 @@ def slsm(boardSize, player, jumps):
                 mx = x
                 mx_ind = i + 1
                 from_mirror = False
-            if x == '+':
-                for j, y in enumerate(board[i + k + 1:i + k + 1 + 6]):
+            elif x == '+':
+                print(i + k + 1, board[i + k + 1 + 1:i + k + 1 + 6 + 1])
+                for j, y in enumerate(board[i + k + 1 + 1:i + k + 1 + 6 + 1]):
                     if y != '+' and y != '-' and y > mx:
-                        print(y)
                         mx = y
-                        mx_ind = j
+                        mx_ind = j + 1
                         prev_ind = i + 1
                         from_mirror = True
 
@@ -70,7 +71,7 @@ def slsm(boardSize, player, jumps):
         best_choice = findmax(x)
         shortest_path.extend(best_choice[0])
         x = best_choice[1]
-        ans.append(x)
+        ans.extend(best_choice[0])
     print(ans)
     return shortest_path
 

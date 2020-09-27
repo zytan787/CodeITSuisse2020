@@ -2,9 +2,8 @@ import logging
 import json
 import numpy as np
 
-# from sklearn.pipeline import Pipeline
-# from sklearn.preprocessing import StandardScaler, FunctionTransformer
-# from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.linear_model import LinearRegression
 
 from flask import request, jsonify
 
@@ -41,6 +40,7 @@ class InputPipeline:
             all_mean.append(mean_n)
             all_std.append(std_n)
         all_data = np.hstack((all_mean, all_std))
+        all_data = MinMaxScaler().fit_transform(all_data)
         return all_data[:-1], all_data[-1:]
 
     def get_train_input(self):
@@ -54,7 +54,7 @@ class InputPipeline:
 def preTick():
     data = request.get_data()
     logging.info("data sent for evaluation {}".format(data))
-    data = data.decode('utf-8').split("\n")[1:]
+    data = data.decode('utf-8').strip().split("\n")[1:]
     for i in range(len(data)):
         data[i] = list(map(float, data[i].strip().split(",")))
     data = np.array(data)
@@ -62,7 +62,6 @@ def preTick():
     input_pipeline = InputPipeline(data, [5, 10, 15, 20, 30, 40, 50])
     X_train, y_train = input_pipeline.get_train_input()
     X_test = input_pipeline.get_test_input()
-    print(X_train.shape, y_train.shape, X_test.shape)
 
     linear_regressor = LinearRegression()
     linear_regressor.fit(X_train, y_train)
