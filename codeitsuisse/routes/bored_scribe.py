@@ -92,7 +92,7 @@ def decrypt(s):
 
         real_ans = real_ans.strip()
 
-    if encryption_count == 6:
+    if encryption_count == 6 and not real_ans:
         real_ans = ans
     return real_ans, encryption_count
 
