@@ -17,15 +17,20 @@ from codeitsuisse import app;
 logger = logging.getLogger(__name__)
 
 def decrypt(s):
+    # print(words)
+
     ans = s
     real_ans = ""
     encryption_count = 0
 
     word = False
     for i in range(len(ans)):
-        for j in range(len(ans),2,-1):
-            if ans[i:j] in words:
+        for j in range(len(ans),3,-1):
+            if len(ans[i:i+j]) >= 4  and ans[i:i+j] in words:
+                print(ans[i:i+j])
                 word = True
+                break
+            if len(ans[i:i+j]) <= 3:
                 break
         if word:
             break
@@ -84,9 +89,12 @@ def decrypt(s):
 
         word = False
         for i in range(len(ans)):
-            for j in range(len(ans),2,-1):
-                if ans[i:j] in words:
+            for j in range(len(ans),3,-1):
+                if len(ans[i:i+j]) >= 4  and ans[i:i+j] in words:
+                    print(ans[i:i+j])
                     word = True
+                    break
+                if len(ans[i:i+j]) <= 3:
                     break
             if word:
                 break
