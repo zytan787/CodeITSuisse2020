@@ -37,7 +37,7 @@ def decrypt(s):
 
     real_ans = real_ans.strip()
 
-    while not real_ans and encryption_count < 10:
+    while not real_ans and encryption_count < 6:
         encryption_count += 1
         s = ans
         palindromes = set()
@@ -92,7 +92,7 @@ def decrypt(s):
 
         real_ans = real_ans.strip()
 
-    if encryption_count == 10:
+    if encryption_count == 6:
         real_ans = ans
     return real_ans, encryption_count
 
