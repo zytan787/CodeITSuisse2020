@@ -23,7 +23,7 @@ def decrypt(s):
 
     i = 0
     word = False
-    for j in range(2, 6):
+    for j in range(2, 10):
         if ans[:j] in words:
             word = True
             break
@@ -74,7 +74,7 @@ def decrypt(s):
         i = 0
         real_ans = ""
         word = False
-        for j in range(2, 6):
+        for j in range(2, 10):
             if ans[:j] in words:
                 word = True
                 break
