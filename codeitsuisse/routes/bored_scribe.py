@@ -87,7 +87,6 @@ def evaluateBoredScribe():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     result = []
-    print(words)
     for el in data:
         originalText, encryptionCount = decrypt(el.get("encryptedText"))
         result.append({"id": el.get("id"), "encryptionCount":encryptionCount, "originalText":originalText})
