@@ -20,7 +20,20 @@ def decrypt(s):
     ans = s
     real_ans = ""
     encryption_count = 0
-    while not real_ans:
+
+    i = 0
+    word = False
+    for j in range(2, len(ans)):
+        if ans[:j] in words:
+            word = True
+            break
+
+    if not word:
+        real_ans = ""
+    else:
+        real_ans = ans
+
+    while not real_ans and encryption_count < 5:
         encryption_count += 1
         s = ans
         palindromes = set()
