@@ -22,9 +22,9 @@ def decrypt(s):
     encryption_count = 0
 
     i = 0
-    word = False
     while i < len(ans):
-        for j in range(2, 10):
+        word = False
+        for j in range(2, 6):
             if ans[i:i+j] in words:
                 word = True
                 real_ans += ans[i:i+j] + " "
@@ -77,8 +77,8 @@ def decrypt(s):
 
         i = 0
         real_ans = ""
-        word = False
         while i < len(ans):
+            word = False
             for j in range(2, 10):
                 if ans[i:i+j] in words:
                     word = True
