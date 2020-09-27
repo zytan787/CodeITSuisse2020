@@ -4,7 +4,11 @@ import json
 # d = enchant.Dict("en_US")
 # import nltk
 # nltk.data.path.append('D:\CodeIT Suisse 2020\CodeITSuisse2020\nltk_data')
-from nltk.corpus import wordnet
+# from nltk.corpus import wordnet
+
+with open("word_list.txt") as f:
+    content = f.readlines()
+words = [x.strip() for x in content]
 
 from flask import request, jsonify;
 
@@ -16,7 +20,20 @@ def decrypt(s):
     ans = s
     real_ans = ""
     encryption_count = 0
-    while not real_ans:
+
+    i = 0
+    word = False
+    for j in range(2, 10):
+        if ans[:j] in words:
+            word = True
+            break
+
+    if not word:
+        real_ans = ""
+    else:
+        real_ans = ans
+
+    while not real_ans and encryption_count < 5:
         encryption_count += 1
         s = ans
         palindromes = set()
@@ -57,8 +74,8 @@ def decrypt(s):
         i = 0
         real_ans = ""
         word = False
-        for j in range(2, len(ans)):
-            if ans[:j] in wordnet.words():
+        for j in range(2, 10):
+            if ans[:j] in words:
                 word = True
                 break
 
@@ -67,6 +84,8 @@ def decrypt(s):
         else:
             real_ans = ans
 
+    if encryption_count == 5:
+        real_ans = ans
     return real_ans, encryption_count
 
 def expandAroundCenter(s, l, r, palindromes):
@@ -87,7 +106,7 @@ def evaluateBoredScribe():
         originalText, encryptionCount = decrypt(el.get("encryptedText"))
         result.append({"id": el.get("id"), "encryptionCount":encryptionCount, "originalText":originalText})
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return jsonify(result)
 
 
 
