@@ -19,7 +19,7 @@ def slsm(boardSize, player, jumps):
         elif int(temp[1]) == 0:
             board[int(temp[0])] = '-'
         elif int(temp[0]) > int(temp[1]):
-            board[int(temp[1])] = int(temp[0])
+            board[int(temp[0])] = int(temp[1])
         elif int(temp[0]) < int(temp[1]):
             board[int(temp[0])] = int(temp[1])
     for a in range(0, boardSize + 1, 10):
