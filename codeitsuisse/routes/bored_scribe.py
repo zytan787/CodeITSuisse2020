@@ -8,7 +8,7 @@ import json
 
 with open("word_list.txt") as f:
     content = f.readlines()
-words = [x.strip() for x in content]
+words = [x.strip().lower() for x in content]
 
 from flask import request, jsonify;
 
@@ -41,7 +41,7 @@ def decrypt(s):
         real_ans = ans
         return real_ans, encryption_count
 
-    while not real_ans and encryption_count < 10:
+    while not real_ans:
         encryption_count += 1
         s = ans
         palindromes = set()
@@ -99,8 +99,8 @@ def decrypt(s):
             real_ans = ans
             return real_ans, encryption_count
 
-    if encryption_count == 10 and not real_ans:
-        real_ans = ans
+    # if encryption_count == 10 and not real_ans:
+    #     real_ans = ans
     return real_ans, encryption_count
 
 def expandAroundCenter(s, l, r, palindromes):
